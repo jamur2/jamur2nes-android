@@ -30,7 +30,7 @@ public class AccountEntryAdapter extends ArrayAdapter<Account> {
         if (v == null) {
             LayoutInflater vi = (LayoutInflater)this.context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-            v = vi.inflate(R.layout.list_item, null);
+            v = vi.inflate(R.layout.account_item, null);
         }
 
         Account account = accountDataItems.get(position);

@@ -26,7 +26,7 @@ public class LoginActivity extends ListActivity
             Arrays.asList(accounts));
 
         this.setListAdapter(new AccountEntryAdapter(this,
-            R.layout.list_item, accounts_arraylist));
+            R.layout.account_item, accounts_arraylist));
     }
 
     @Override
@@ -34,7 +34,7 @@ public class LoginActivity extends ListActivity
             long id) {
         Account account = (Account)getListView().getItemAtPosition(
             position);
-        Intent intent = new Intent(this, AppInfo.class);
+        Intent intent = new Intent(this, SubscriptionListActivity.class);
         intent.putExtra("account", account);
         startActivity(intent);
     }
