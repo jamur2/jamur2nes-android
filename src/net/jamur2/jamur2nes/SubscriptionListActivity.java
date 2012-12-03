@@ -65,11 +65,13 @@ public class SubscriptionListActivity extends ListActivity {
                     bundle = (Bundle) result.getResult();
                     AccountManager accountManager = AccountManager.get(
                         getApplicationContext());
-                    String authToken = bundle.get(
-                        AccountManager.KEY_AUTHTOKEN).toString();
-                    Log.v("subscriptions", "Invalidating token: " + authToken);
-                    accountManager.invalidateAuthToken("com.google",
-                        authToken);
+                    Object authToken = bundle.get(AccountManager.KEY_AUTHTOKEN);
+                    if (authToken != null) {
+                        Log.v("subscriptions", "Invalidating token: " +
+                            authToken.toString());
+                        accountManager.invalidateAuthToken("com.google",
+                            authToken.toString());
+                    }
             } catch (OperationCanceledException e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
