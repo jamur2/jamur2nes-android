@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 
 public class SubscriptionEntryAdapter extends ArrayAdapter<Subscription> {
-    private ArrayList<Subscription> subscriptionDataItems;
-    private Activity context;
+    protected ArrayList<Subscription> subscriptionDataItems;
+    protected Activity context;
 
     public SubscriptionEntryAdapter(Activity context, int textViewResourceId,
             ArrayList<Subscription> subscriptionDataItems) {

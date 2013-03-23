@@ -22,6 +22,12 @@ public class LoginActivity extends ListActivity
 
         accountManager = AccountManager.get(getApplicationContext());
         Account[] accounts = accountManager.getAccountsByType("com.google");
+        if (accounts.length == 1) {
+            // Only one account, let's use that one
+            Intent intent = new Intent(this, SubscriptionListActivity.class);
+            intent.putExtra("account", accounts[0]);
+            startActivity(intent);
+        }
         ArrayList<Account> accounts_arraylist = new ArrayList<Account>(
             Arrays.asList(accounts));
 

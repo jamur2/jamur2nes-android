@@ -6,13 +6,13 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Toast;
+import android.widget.ArrayAdapter;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -25,19 +25,25 @@ import org.apache.http.client.params.ClientPNames;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.json.JSONException;
 
 public class SubscriptionListActivity extends ListActivity {
     DefaultHttpClient http_client = new DefaultHttpClient();
     private final ReentrantLock http_lock = new ReentrantLock();
 
+    protected ArrayList<Subscription> subscriptions = (
+        new ArrayList<Subscription>());
+
+    protected ArrayAdapter<Subscription> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.subscription_list);
-        ArrayList<Subscription> subscriptions = new ArrayList<Subscription>();
-        this.setListAdapter(new SubscriptionEntryAdapter(this,
-            R.layout.subscription_item, subscriptions));
+        adapter = new SubscriptionEntryAdapter(
+            this, R.layout.subscription_item, subscriptions);
+        this.setListAdapter(adapter);
     }
 
     @Override
@@ -165,7 +171,16 @@ public class SubscriptionListActivity extends ListActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            JSONArray subscriptions = null;
+            try {
+                JSONObject json_subscription = new JSONObject(result);
+                Subscription sub = new Subscription(
+                    json_subscription.getString("title"));
+                subscriptions.add(sub);
+                SubscriptionListActivity.this.adapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
             Log.v("subscriptions", "Got subscription: " + result);
         }
     }
