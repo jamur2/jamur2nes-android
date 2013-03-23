@@ -3,7 +3,6 @@ package net.jamur2.jamur2nes;
 import android.accounts.Account;
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
